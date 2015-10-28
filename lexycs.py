@@ -38,6 +38,8 @@ def analyse(source):
     ]
     
     for i, line in enumerate(source, start=1):
+        if (len(line) == 0):
+            continue
         if line[0].startswith('.'):
             continue
         
