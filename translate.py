@@ -39,11 +39,11 @@ def translate(data, program):
     instructions = {}
     for i, instr in enumerate(instructions_raw):
         instructions[instr] = i
-    
+    data = [0x6D766B6B] + [2] + data
     code = [0 for _ in range(len(data) + len(program)*3)]
     code[:len(data)] = data
     
-    ip = len(data)+2
+    ip = len(data)
     code[ip] = 0x1
     ip += 1
     for instr in program:
@@ -55,7 +55,7 @@ def translate(data, program):
     
     ip += 1
     code = code[:ip]
-    code = struct.pack('l'*len(code), *code)
+    code = struct.pack('I'*len(code), *code)
     
     return code
         
