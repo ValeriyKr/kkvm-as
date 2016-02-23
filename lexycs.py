@@ -34,7 +34,8 @@ def analyse(source):
         ('readw', 1),
         ('writea', 1),
         ('reada', 1),
-        ('deeps', 1)
+        ('deeps', 1),
+        ('halt', 1)
     ]
     
     for i, line in enumerate(source, start=1):

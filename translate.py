@@ -33,7 +33,8 @@ def translate(data, program):
         'readw',
         'writea',
         'reada',
-        'deeps'
+        'deeps',
+        'halt'
     ]
     
     instructions = {}
