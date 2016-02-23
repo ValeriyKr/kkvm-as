@@ -21,12 +21,16 @@ def main():
         
     source = []
     for line in fp:
-        source.append(line.split())
+        source.append(line.split(';')[0].split())
     fp.close()
     
     data, program = lexycs.analyse(source)
     if program == None:
         return 1
+    
+    while [] in program:
+        program.remove([])
+    
     data, program = preprocessor.pretreat(data, program)
     if program == None:
         return 2
