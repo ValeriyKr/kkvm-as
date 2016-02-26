@@ -35,7 +35,10 @@ def analyse(source):
         ('writea', 1),
         ('reada', 1),
         ('deeps', 1),
-        ('halt', 1)
+        ('halt', 1),
+        ('mpeek', 2),
+        ('mpush', 2),
+        ('mpop', 2)
     ]
     
     for i, line in enumerate(source, start=1):
@@ -66,3 +69,4 @@ def analyse(source):
                     return (None, None)
     
     return ([], source)
+

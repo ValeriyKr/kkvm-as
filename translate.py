@@ -34,7 +34,10 @@ def translate(data, program):
         'writea',
         'reada',
         'deeps',
-        'halt'
+        'halt',
+        'mpeek',
+        'mpush',
+        'mpop'
     ]
     
     instructions = {}
