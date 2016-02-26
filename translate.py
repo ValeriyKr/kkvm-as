@@ -1,5 +1,6 @@
 import struct
 
+
 def translate(data, program):
     instructions_raw = [
         'fail',
@@ -37,16 +38,18 @@ def translate(data, program):
         'halt',
         'mpeek',
         'mpush',
-        'mpop'
+        'mpop',
+        'minc',
+        'mdec'
     ]
-    
+
     instructions = {}
     for i, instr in enumerate(instructions_raw):
         instructions[instr] = i
     data = [0x6D766B6B] + [2] + data
-    code = [0 for _ in range(len(data) + len(program)*3)]
+    code = [0 for _ in range(len(data) + len(program) * 3)]
     code[:len(data)] = data
-    
+
     ip = len(data)
     code[ip] = 0x1
     ip += 1
@@ -56,11 +59,9 @@ def translate(data, program):
             ip += 1
             code[ip] = arg
         ip += 1
-    
+
     ip += 1
     code = code[:ip]
-    code = struct.pack('I'*len(code), *code)
-    
+    code = struct.pack('I' * len(code), *code)
+
     return code
-        
-        
