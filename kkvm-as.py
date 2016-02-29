@@ -32,6 +32,8 @@ When binary file is missing, output will named "a.kk"'''.format(sys.argv[0]))
     if program is None:
         return 1
 
+    while [] in data:
+        data.remove([])
     while [] in program:
         program.remove([])
 

@@ -1,6 +1,18 @@
 import struct
 
 
+def make_data_segment(data):
+    binary_data = []
+    for i, element in enumerate(data, start=1):
+        if element[0] == ':word':
+            binary_data.append(int(element[1]))
+        elif element[0] == ':str':
+            for char in element[1]:
+                binary_data.append(ord(char))
+    print(binary_data)
+    return binary_data
+
+
 def translate(data, program):
     instructions_raw = [
         'fail',
@@ -43,10 +55,11 @@ def translate(data, program):
         'mdec'
     ]
 
+    data = make_data_segment(data)
     instructions = {}
     for i, instr in enumerate(instructions_raw):
         instructions[instr] = i
-    data = [0x6D766B6B] + [2] + data
+    data = [0x6D766B6B] + [len(data)+2] + data
     code = [0 for _ in range(len(data) + len(program) * 3)]
     code[:len(data)] = data
 

@@ -1,4 +1,9 @@
 def analyse(source):
+    data_types = [
+        ':str',
+        ':word'
+    ]
+
     instructions = [
         ('fail', 1),
         ('nop', 1),
@@ -43,14 +48,33 @@ def analyse(source):
         ('mdec', 2)
     ]
 
+    code_segment = -1
     for i, line in enumerate(source, start=1):
         if len(line) == 0:
             continue
+        if line[0].startswith(':'):
+            if code_segment != -1:
+                print('Data in Code Segment: [{0}] in line {1}'.format(line[0], i))
+            else:
+                if len(line) < 2:
+                    print('Elements in Data Segment should be writen as <:type value>, line {0}'.format(i))
+                    return None, None
+                if line[0] not in data_types:
+                    print("Don't know data type [{0}] in line {1}".format(line[0], i))
+                    return None, None
+
+                line[1] = ' '.join(line[1:])
+                while len(line) != 2:
+                    del line[2]
+                continue
+
+        if code_segment == -1:
+            code_segment = i-1
         if line[0].startswith('.'):
             continue
 
         if (line[0], len(line)) not in instructions:
-            print("Don't knwow instruction [{0}] with {1} arguments in line {2}".format(line[0], len(line)-1, i))
+            print("Don't know instruction [{0}] with {1} arguments in line {2}".format(line[0], len(line)-1, i))
             return None, None
 
         if line[0].startswith('jmp'):
@@ -70,5 +94,5 @@ def analyse(source):
                     print('Non-integer argument [{0}] in line {1}'.format(line[arg], i))
                     return None, None
 
-    return [], source
+    return source[:code_segment], source[code_segment:]
 
